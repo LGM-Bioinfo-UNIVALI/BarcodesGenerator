@@ -1,0 +1,100 @@
+>rand_1	random sequence 1/50; type: dna; length: 12
+TGGGCTCCTCCG
+>rand_2	random sequence 2/50; type: dna; length: 12
+AACGGACAATTT
+>rand_3	random sequence 3/50; type: dna; length: 12
+GTACGGGGCGCC
+>rand_4	random sequence 4/50; type: dna; length: 12
+TATTGGCTACAG
+>rand_5	random sequence 5/50; type: dna; length: 12
+AAGAGGAACTAA
+>rand_6	random sequence 6/50; type: dna; length: 12
+GAGAAGATATAT
+>rand_7	random sequence 7/50; type: dna; length: 12
+AAGCCCATCCTG
+>rand_8	random sequence 8/50; type: dna; length: 12
+GGGTAACCAGGA
+>rand_9	random sequence 9/50; type: dna; length: 12
+ATCTAACTTTAG
+>rand_10	random sequence 10/50; type: dna; length: 12
+ACCATTTACATA
+>rand_11	random sequence 11/50; type: dna; length: 12
+CGTAAGCCCCTG
+>rand_12	random sequence 12/50; type: dna; length: 12
+TGCAGAAGAGCC
+>rand_13	random sequence 13/50; type: dna; length: 12
+AAGCGATATGAA
+>rand_14	random sequence 14/50; type: dna; length: 12
+CATAGGTCCGTA
+>rand_15	random sequence 15/50; type: dna; length: 12
+GCAAGCTAACAC
+>rand_16	random sequence 16/50; type: dna; length: 12
+AACTCGCTGTGT
+>rand_17	random sequence 17/50; type: dna; length: 12
+GCGCGAGGCCCT
+>rand_18	random sequence 18/50; type: dna; length: 12
+CTAAATGTATCT
+>rand_19	random sequence 19/50; type: dna; length: 12
+CAAGTACGTGTC
+>rand_20	random sequence 20/50; type: dna; length: 12
+GTTGGTCTAGCC
+>rand_21	random sequence 21/50; type: dna; length: 12
+TATAGCATGTGC
+>rand_22	random sequence 22/50; type: dna; length: 12
+CGCAAGACAAGC
+>rand_23	random sequence 23/50; type: dna; length: 12
+GATACCATCAAT
+>rand_24	random sequence 24/50; type: dna; length: 12
+GGAGACCGGTTC
+>rand_25	random sequence 25/50; type: dna; length: 12
+CGGAATAACTTG
+>rand_26	random sequence 26/50; type: dna; length: 12
+CGCAGGGTCCCT
+>rand_27	random sequence 27/50; type: dna; length: 12
+GGTAACCCGTTC
+>rand_28	random sequence 28/50; type: dna; length: 12
+GATAGAGACATC
+>rand_29	random sequence 29/50; type: dna; length: 12
+GGTAACACTATG
+>rand_30	random sequence 30/50; type: dna; length: 12
+CTCAAAAAGGTT
+>rand_31	random sequence 31/50; type: dna; length: 12
+CTCAAATGCCGA
+>rand_32	random sequence 32/50; type: dna; length: 12
+CGCCGTTTTTCG
+>rand_33	random sequence 33/50; type: dna; length: 12
+TAGTAATTTGCT
+>rand_34	random sequence 34/50; type: dna; length: 12
+GACGGGATGCTC
+>rand_35	random sequence 35/50; type: dna; length: 12
+GATGCAGCGTAT
+>rand_36	random sequence 36/50; type: dna; length: 12
+AGGGCAGGACGT
+>rand_37	random sequence 37/50; type: dna; length: 12
+CGGAAGGTAACG
+>rand_38	random sequence 38/50; type: dna; length: 12
+GACGTCGAGTCA
+>rand_39	random sequence 39/50; type: dna; length: 12
+CAACGCTGAACT
+>rand_40	random sequence 40/50; type: dna; length: 12
+GTTGAAATGGTA
+>rand_41	random sequence 41/50; type: dna; length: 12
+AACGAGCTAAGA
+>rand_42	random sequence 42/50; type: dna; length: 12
+CCCATTTGACTT
+>rand_43	random sequence 43/50; type: dna; length: 12
+GATAGTGATTAA
+>rand_44	random sequence 44/50; type: dna; length: 12
+GGTATGTCGGTC
+>rand_45	random sequence 45/50; type: dna; length: 12
+TCAGTCAGCTTA
+>rand_46	random sequence 46/50; type: dna; length: 12
+CAATTGCCCACA
+>rand_47	random sequence 47/50; type: dna; length: 12
+CTCGGGCTTACT
+>rand_48	random sequence 48/50; type: dna; length: 12
+GAGCCACTCCTA
+>rand_49	random sequence 49/50; type: dna; length: 12
+AATCTCAAATTT
+>rand_50	random sequence 50/50; type: dna; length: 12
+ACATATATGATG
