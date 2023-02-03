@@ -1,76 +1,50 @@
-from Bio.SeqUtils import GC
+import os
+import re
+import sys
+import yaml
+
 from Bio import SeqIO
+from Bio.SeqUtils import GC
 
 from difflib import SequenceMatcher
 
-import re
-import sys
 
-FILE = sys.argv[1]
-
-# Max tolerance for common nucleotides in subsequences between two sequences (the subsequences must be at the same position)
-# If the common subsequence has more nucleotides than the tolerance value, the second sequence will be discarded
-MAX_SIMILARITY = 5
-GC_PERC = (35, 65)  # Percentage range of GC
-file_name = FILE.split('.')[0].replace('Input/', '')
-RESULTS_FILE = f'Saved Results/{file_name}_filtered'
-SAVE_AS = 'txt'
-MAX_BASERUN_REPETITION = 2
+def read_yaml(file_path):
+    with open(file_path, "r") as f:
+        return yaml.safe_load(f)
 
 
-def read_barcodes(file, extension):
+def generate_barcodes(config):
+	if config['APP']['OS'] != 'linux' or config['APP']['SHELL'] != 'bash':
+		raise Exception('The barcodes generation can only be done in linux machines with bash shell :(')
+
+	else:
+		os.system("chmod u+x generate_barcodes.sh")
+		conda_source = config['GENERATE_BARCODES']['CONDA_SOURCE']
+		length = config['GENERATE_BARCODES']['LENGTH']
+		number = config['GENERATE_BARCODES']['NUMBER']
+		file_name = config['GENERATE_BARCODES']['FILE_NAME']
+		os.system(f"./generate_barcodes.sh {conda_source} {length} {number} {file_name}")
+
+
+def read_barcodes(input_file):
+	extension = input_file.split('.')[-1]
+
 	if extension == "txt":
 		# Read barcodes
-		with open(file, 'r') as f:
+		with open(input_file, 'r') as f:
 			content = f.read()
 			content = content.split('\n')
 
 		return content
+
 	elif extension in ['fa', 'fna', 'fasta', 'fas']:
 		content = []		
 
-		for record in SeqIO.parse(file, "fasta"):
+		for record in SeqIO.parse(input_file, "fasta"):
 		    content.append(str(record.seq))
 
 		return content
-
-def match_found(seq, seq2):
-	# Search a match between current sequence and the sequences already selected
-	match = SequenceMatcher(None, seq, seq2).find_longest_match(0, len(seq), 0, len(seq2))
-	repeated_nuc = len(seq[match.a:match.a + match.size])
-
-	# If the common subsequence has more than 6 nucleotides and it starts at the same position in both sequences the current sequence won't be added to the list
-	if repeated_nuc > MAX_SIMILARITY and match.a == match.b:
-		return True
-
-	return False
-
-
-def filter_by_common_subsequence(barcodes):
-	filtered_barcodes = []
-
-	# # Iterate over the sequences
-	# for pos, seq in enumerate(barcodes):
-	# 	add_seq = True
-
-	# 	# Iterate over the already selected sequences
-	# 	for seq2 in filtered_barcodes:
-	# 		if match_found(seq, seq2):
-	# 			add_seq = False
-	# 			break
-			
-
-	# 	# Add sequence to the filtered sequences list
-	# 	if add_seq is True:
-	# 		filtered_barcodes.append(seq)
-
-	# 	if pos % 1000 == 0:
-	# 		print(pos)
-
-	for pos, seq in enumerate(barcodes):
-		if seq not in filtered_barcodes:
-			filtered_barcodes.append(seq)
-	return filtered_barcodes
 
 
 def filter_by_baseruns(barcodes, MAX_REPETITION):
@@ -84,24 +58,68 @@ def filter_by_baseruns(barcodes, MAX_REPETITION):
 	return filtered_barcodes
 
 
-def write_results_file(barcodes):
-		# Empty results file
-		with open(f"{RESULTS_FILE}.{SAVE_AS}", 'w') as f:
-			f.write('')
+def match_found(seq, seq2, MAX_SIMILARITY):
+	# Search a match between current sequence and the sequences already selected
+	match = SequenceMatcher(None, seq, seq2).find_longest_match(0, len(seq), 0, len(seq2))
+	repeated_nuc = len(seq[match.a:match.a + match.size])
 
-		# Write sequences
-		with open(f"{RESULTS_FILE}.{SAVE_AS}", 'w') as result_file:
-			for pos, seq in enumerate(barcodes):
-				if SAVE_AS == 'txt':
-					result_file.write(f"{seq}\n")
-				elif SAVE_AS in ['fa', 'fna', 'fasta', 'ffn', 'faa', 'frn']:
-					result_file.write(f">ID: {pos}\n{seq}\n")
+	# If the common subsequence has more than 6 nucleotides and it starts at the same position in both sequences the current sequence won't be added to the list
+	if repeated_nuc > MAX_SIMILARITY and match.a == match.b:
+		return True
+
+	return False
+
+
+def filter_by_common_subsequence(barcodes, MAX_SIMILARITY):
+	filtered_barcodes = []
+
+	print('Filtering by common subsequence\n')
+	# Iterate over the sequences
+	for pos, seq in enumerate(barcodes):
+		add_seq = True
+
+		# Iterate over the already selected sequences
+		for seq2 in filtered_barcodes:
+			# Check if the two sequences have the same subsequence
+			if match_found(seq, seq2, MAX_SIMILARITY):
+				add_seq = False
+				break
 			
 
+		# Add sequence to the filtered sequences list
+		if add_seq is True:
+			filtered_barcodes.append(seq)
+
+		if pos % 1000 == 0:
+			print(pos, 'barcodes done')
+
+	print(len(barcodes), 'barcodes done')
+
+
+	return filtered_barcodes
+
+
+def write_results_file(barcodes, output_file):
+	extension = output_file.split('.')[-1]
+
+	# Write sequences
+	with open(output_file, 'w') as result_file:
+		for pos, seq in enumerate(barcodes):
+			if extension == 'txt':
+				result_file.write(f"{seq}\n")
+			elif extension in ['fa', 'fna', 'fasta', 'ffn', 'faa', 'frn']:
+				result_file.write(f">ID: {pos}\n{seq}\n")
 
 
 if __name__ == '__main__':
-	barcodes = read_barcodes(FILE, FILE.split('.')[-1])
-	barcodes = filter_by_baseruns(barcodes, MAX_BASERUN_REPETITION)
-	barcodes = filter_by_common_subsequence(barcodes)
-	write_results_file(barcodes)
+	config = read_yaml('config.yaml')
+
+	if config['APP']['GENERATE_BARCODES'] is True:
+		generate_barcodes(config)
+	
+	barcodes = read_barcodes(config['VARIABLES']['INPUT_FILE'])
+	barcodes = filter_by_baseruns(barcodes, config['VARIABLES']['MAX_BASERUN_REPETITION'])
+	barcodes = filter_by_common_subsequence(barcodes, config['VARIABLES']['MAX_SIMILARITY'])
+	# Não está filtrando por porcentagem de GC
+
+	write_results_file(barcodes, config['VARIABLES']['OUTPUT_FILE'])
