@@ -44,7 +44,7 @@
 > Discard sequences with baseruns (base repetition) bigger than the max number defined by the user  
 > &nbsp; &nbsp; Example:  
 > &nbsp; &nbsp; &nbsp; **Max baserun** = 2  
-> &nbsp; &nbsp; &nbsp; **Barcode1:** ACAATG &#8594; will **not be discarded** 
+> &nbsp; &nbsp; &nbsp; **Barcode1:** ACAATG &#8594; will **not be discarded**  
 > &nbsp; &nbsp; &nbsp; **Barcode2:** ACAAATG &#8594; will **be discarded** because of 'AAA'  
 
 - Filter by **common subsequence** between barcodes:
@@ -107,5 +107,5 @@ GENERATE_BARCODES:
     >rand_5 random sequence 5/50; type: dna; length: 12
     AAGAGGAACTAA
     ```
-- You can also save the **output** results with a **TXT** or a **FASTA** extension by specifying it via the output file variable in the config.yaml file
+- You can also save the **output** results with a **TXT** or a **FASTA** extension by specifying it via the output file variable in the **config.yaml** file
 ---
