@@ -1,13 +1,26 @@
 # BarcodesFilter
  Filter barcodes based on some criteria
 
-Dependencies:
-ubuntu/linux
-    rsat package (download barcodes)
-python x.x
-library x
 
-tutorial instalaço rsat
+---
+
+:warning: Dependencies:
+- Generate Barcodes:
+    To Generate barcodes through the program you have to:
+    - Have a machine with a linux distribution that uses bash as shell
+    - Install 'rsat' package via conda environment
+        You can check the installation tutorial here https://rsa-tools.github.io/installing-RSAT/conda-install-rsat/bioconda-rsat-core.html
+        OBS: Errors can occur because of conflits with the python version. You can fix that by installing 'rsat' via mamba instead of conda, like this:
+        conda install -n base conda-forge::mamba # Install mamba
+        mamba create -n rsat python=3.7  # Create 'rsat' conda environment with python 3.7
+        conda activate rsat  # Activate environment
+        mamba install -c bioconda rsat-core  # Install 'rsat'
+
+- General:
+    -python x.x
+    -library x
+
+---
 
 filter criteria:
 xxxxxx
