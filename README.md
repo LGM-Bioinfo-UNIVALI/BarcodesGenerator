@@ -39,23 +39,23 @@
 ---
 ### :broom: Barcodes Filter Criteria
 
-- Filter by **Baseruns**:
+- Filter by **baseruns**:
 
 > Discard sequences with baseruns (base repetition) bigger than the max number defined by the user  
 > &nbsp; &nbsp; Example:  
-> &nbsp; &nbsp; &nbsp; Max baserun = 2  
-> &nbsp; &nbsp; &nbsp; Sequence: ACAATG -> will not be discarded  
-> &nbsp; &nbsp; &nbsp; Sequence: ACAAATG -> will be discarded because of 'AAA'  
+> &nbsp; &nbsp; &nbsp; **Max baserun** = 2  
+> &nbsp; &nbsp; &nbsp; **Barcode1:** ACAATG &#8594; will **not be discarded** 
+> &nbsp; &nbsp; &nbsp; **Barcode2:** ACAAATG &#8594; will **be discarded** because of 'AAA'  
 
-- Filter by **Common Subsequence** between barcodes:
+- Filter by **common subsequence** between barcodes:
 
 > Discard barcodes that contain same subsequence, at the same position, (with min size defined by the user) as an already selected barcode  
 > &nbsp; &nbsp;Example:  
 > &nbsp; &nbsp; &nbsp; **Max similarity between sequences** = 3  
-> &nbsp; &nbsp; &nbsp; **Barcode1:** ACAATG -> **Selected**  
-> &nbsp; &nbsp; &nbsp; **Barcode2:** ACAACC -> **Discarded** because has the same subsequence as Barcode1, at the same position  
-> &nbsp; &nbsp; &nbsp; **Barcode3:** CACAAT -> **Selected** because has the same subsequence as Barcode1, but at a different position  
-> &nbsp; &nbsp; &nbsp; **Barcode4:** ACATCC -> **Selected** because the common subsequence did not surpass the max similarity
+> &nbsp; &nbsp; &nbsp; **Barcode1:** ACAATG &#8594; **Selected**  
+> &nbsp; &nbsp; &nbsp; **Barcode2:** ACAACC &#8594; **Discarded** because has the same subsequence as Barcode1, at the same position  
+> &nbsp; &nbsp; &nbsp; **Barcode3:** CACAAT &#8594; **Selected** because has the same subsequence as Barcode1, but at a different position  
+> &nbsp; &nbsp; &nbsp; **Barcode4:** ACATCC &#8594; **Selected** because the common subsequence did not surpass the max similarity
 
 
 ---
@@ -107,5 +107,5 @@ GENERATE_BARCODES:
     >rand_5 random sequence 5/50; type: dna; length: 12
     AAGAGGAACTAA
     ```
--You can also save the **output** results with a **TXT** or a **FASTA** extension by specifying it via the output file variable in the config.yaml file
+- You can also save the **output** results with a **TXT** or a **FASTA** extension by specifying it via the output file variable in the config.yaml file
 ---
