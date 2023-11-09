@@ -6,6 +6,8 @@ import yaml
 from Bio import SeqIO
 from Bio.SeqUtils import GC
 
+from itertools import product
+
 from difflib import SequenceMatcher
 
 
@@ -15,16 +17,26 @@ def read_yaml(file_path):
 
 
 def generate_barcodes(config):
-	if config['APP']['OS'] != 'linux' or config['APP']['SHELL'] != 'bash':
-		raise Exception('The barcodes generation can only be done in linux machines with bash shell :(')
+	conda_source = config['GENERATE_BARCODES']['CONDA_SOURCE']
+	length = config['GENERATE_BARCODES']['LENGTH']
+	number = config['GENERATE_BARCODES']['NUMBER']
+	file_name = config['GENERATE_BARCODES']['FILE_NAME']
 
+	if length <= 10:
+		comb = product(['A', 'C', 'T', 'G'], repeat=length)
+		with open(file_name, 'w') as f:
+			content = ''
+			for pos, item in enumerate(comb):
+				barcode = ''.join(item)
+				content += f'>{pos}\n{barcode}\n'
+			f.write(content)
 	else:
-		os.system("chmod u+x generate_barcodes.sh")
-		conda_source = config['GENERATE_BARCODES']['CONDA_SOURCE']
-		length = config['GENERATE_BARCODES']['LENGTH']
-		number = config['GENERATE_BARCODES']['NUMBER']
-		file_name = config['GENERATE_BARCODES']['FILE_NAME']
-		os.system(f"./generate_barcodes.sh {conda_source} {length} {number} {file_name}")
+		if config['APP']['OS'] != 'linux' or config['APP']['SHELL'] != 'bash':
+			raise Exception('The barcodes generation can only be done in linux machines with bash shell :(')
+
+		else:
+			os.system("chmod u+x generate_barcodes.sh")
+			os.system(f"./generate_barcodes.sh {conda_source} {length} {number} {file_name}")
 
 
 def read_barcodes(input_file):
@@ -119,7 +131,7 @@ if __name__ == '__main__':
 	
 	barcodes = read_barcodes(config['VARIABLES']['INPUT_FILE'])
 	barcodes = filter_by_baseruns(barcodes, config['VARIABLES']['MAX_BASERUN_REPETITION'])
-	barcodes = filter_by_common_subsequence(barcodes, config['VARIABLES']['MAX_SIMILARITY'])
+	# barcodes = filter_by_common_subsequence(barcodes, config['VARIABLES']['MAX_SIMILARITY'])
 	# Não está filtrando por porcentagem de GC
 
 	write_results_file(barcodes, config['VARIABLES']['OUTPUT_FILE'])
